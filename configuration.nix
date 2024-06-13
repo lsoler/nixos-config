@@ -42,37 +42,37 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
-  services.xserver = {
-    enable = true;
-    desktopManager = {
-      xterm.enable = true;
-      xfce = {
-        enable = true;
-	noDesktop = true;
-	enableXfwm = true;
-      };
-    };
-    displayManager = {
-      lightdm.enable = true;
-      defaultSession = "xfce+i3";
-    };
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu
-	i3status
-	i3lock
-	i3blocks
-      ];
-    };
-  };
+  #services.xserver = {
+  #  enable = true;
+  #  desktopManager = {
+  #    xterm.enable = true;
+  #    xfce = {
+  #      enable = true;
+#	noDesktop = true;
+#	enableXfwm = true;
+#      };
+#    };
+#    displayManager = {
+#      lightdm.enable = true;
+#      defaultSession = "xfce+i3";
+#    };
+#    windowManager.i3 = {
+#      enable = true;
+#      extraPackages = with pkgs; [
+#        dmenu
+#	i3status
+#	i3lock
+#	i3blocks
+#      ];
+#    };
+#  };
   
   # Enable the X11 windowing system.
-  #services.xserver.enable = true;
+  services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  #services.xserver.displayManager.gdm.enable = true;
-  #services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
 
   # Hyper V
   virtualisation.hypervGuest = {
@@ -89,7 +89,7 @@
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  #services.printing.enable = true;
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
@@ -119,13 +119,19 @@
     #    thunderbird
     ];
   };
-  #users.users.gdm = {
-  #  extraGroups = [ "video" ];
-  #};
+  
+  users.users.gdm = {
+    extraGroups = [ "video" ];
+  };
 
   # Install firefox.
   programs.firefox.enable = true;
-  
+  programs.git = {
+    enable = true;
+    package = pkgs.gitFull;
+    config.credential.helper = "libsecret";
+  };  
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
